@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+  <title>Compare your Borderlands stats agains mine!</title>
+
+  <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="#">Borderlands Archivement stats</a>
+  <div sec:authorize="isAnonymous()" class="navbar-brand ml-auto" href="#">
+    <form name="form" th:action="@{/login/openid}" method="post">
+    <div id="openid_input_area">
+      <input id="openid_identifier" name="openid_identifier" type="hidden"
+             value="http://steamcommunity.com/openid"/>
+      <input id="openid_submit" type="image" src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_01.png"/>
+    </div>
+    </form>
+  </div>
+  <div sec:authorize="isAuthenticated()" class="navbar-brand ml-auto" href="#">
+    <a class="nav-link" href="/logout">Logout</a>
+  </div>
+</nav>
+
+<main class="container" role="main" style="margin-top:100px">
+
+  <div class="starter-template">
+    <h1>Compare your Borderlands achievement stats against me</h1>
+    <h2>
+      Made for "SG Borderlands 3 event" by ozo2003
+    </h2>
+  </div>
+  <table sec:authorize="isAuthenticated()"  class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col">Game</th>
+      <th scope="col">
+        <div th:text="${user.getName()}"></div>
+        <img th:src="${user.getAvatarIcon()}"/>
+      </th>
+      <th scope="col">
+        <div>Blackgen (Mine)</div>
+        <img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5b/5b40e15bdcf5b787161ec99f5720d99fc2c7cc0c.jpg" />
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+      <td>
+        <div >[[${book.getName()}]] ([[${book.getTotal()}]] achievements)</div>
+      </td>
+      <td>
+        <div>[[${book.getYours()}]] ([[${book.getYoursPercent()}]] %)</div>
+      </td>
+      <td>
+        <div>[[${book.getMine()}]] | [[${book.getMinePercent()}]] %</div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</main>
+<!-- /.container -->
+
+<script th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}" type="text/javascript"></script>
+</body>
+</html>
