@@ -1,7 +1,6 @@
 package de.blackgen.ozobl3;
 
 import java.util.ArrayList;
-import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.User;
@@ -12,16 +11,13 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class OpenIdService implements AuthenticationUserDetailsService<OpenIDAuthenticationToken> {
-
-  @Inject
-  private SteamFetcher steamFetcher;
-
+public class NoopAuthService implements
+    AuthenticationUserDetailsService<OpenIDAuthenticationToken> {
 
   @Override
   public UserDetails loadUserDetails(OpenIDAuthenticationToken token)
       throws UsernameNotFoundException {
-
+    // TODO Add some meaningful username & roles
     return new User("Test", "test", new ArrayList<>());
 
   }

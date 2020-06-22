@@ -17,7 +17,7 @@ public class HomeController {
   public static final int BLP = 261640;
 
   @Inject
-  SteamFetcher steamFetcher;
+  private SteamFetcher steamFetcher;
 
   @GetMapping("/")
   public String hello(HttpServletRequest request, Model model) {
@@ -30,6 +30,7 @@ public class HomeController {
       int bl1 = steamFetcher.getArchivementStats(BL1, u.getSteamId());
       int bl2 = steamFetcher.getArchivementStats(BL2, u.getSteamId());
       int blp = steamFetcher.getArchivementStats(BLP, u.getSteamId());
+      // My stats are hardcoded.. But I don't expect them to change during the next days
       stats.add(new Stat("Borderlands (GOTY) enhanced", bl1, 39, 80));
       stats.add(new Stat("Borderlands 2", bl2, 46, 75));
       stats.add(new Stat("Borderlands Pre-Sequel", blp, 34, 63));

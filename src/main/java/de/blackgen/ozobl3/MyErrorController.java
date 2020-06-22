@@ -15,6 +15,8 @@ public class MyErrorController extends AbstractHandlerExceptionResolver {
       HttpServletResponse response,
       Object handler,
       Exception ex) {
+    // In case of an error the session will be deleted.
+    // During development an error was client session would not exist after restart.
     request.getSession().invalidate();
     return new ModelAndView();
   }

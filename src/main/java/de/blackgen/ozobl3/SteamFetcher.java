@@ -9,10 +9,12 @@ import com.lukaspradel.steamapi.webapi.request.GetPlayerSummariesRequest;
 import com.lukaspradel.steamapi.webapi.request.GetUserStatsForGameRequest;
 import com.lukaspradel.steamapi.webapi.request.builders.SteamWebApiRequestFactory;
 import de.blackgen.ozobl3.data.UserProfile;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class SteamFetcher {
 
@@ -23,15 +25,15 @@ public class SteamFetcher {
     client = new SteamWebApiClient.SteamWebApiClientBuilder(Objects.requireNonNull(steamApiKey))
         .build();
   }
-  
+
   public UserProfile fetch(String steamId) {
     GetPlayerSummariesRequest request = SteamWebApiRequestFactory.createGetPlayerSummariesRequest(
-        Arrays.asList(steamId));
+        Collections.singletonList(steamId));
     GetPlayerSummaries o = null;
     try {
       o = client.processRequest(request);
     } catch (SteamApiException e) {
-      e.printStackTrace();
+      log.error("", e);
     }
     Player players = o.getResponse().getPlayers().get(0);
     return new UserProfile(players.getPersonaname(), players.getAvatar(), players.getSteamid());
@@ -44,7 +46,7 @@ public class SteamFetcher {
     try {
       o = client.processRequest(getUserStatsForGameRequest);
     } catch (SteamApiException e) {
-      e.printStackTrace();
+      log.error("", e);
     }
     return o.getPlayerstats().getAchievements().size();
   }
