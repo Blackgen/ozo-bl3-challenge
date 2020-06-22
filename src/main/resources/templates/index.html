@@ -15,16 +15,17 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <a class="navbar-brand" href="#">Borderlands Archivement stats</a>
-  <div sec:authorize="isAnonymous()" class="navbar-brand ml-auto" href="#">
-    <form name="form" th:action="@{/login/openid}" method="post">
-    <div id="openid_input_area">
-      <input id="openid_identifier" name="openid_identifier" type="hidden"
-             value="http://steamcommunity.com/openid"/>
-      <input id="openid_submit" type="image" src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_01.png"/>
-    </div>
+  <div class="navbar-brand ml-auto" href="#" sec:authorize="isAnonymous()">
+    <form method="post" name="form" th:action="@{/login/openid}">
+      <div id="openid_input_area">
+        <input id="openid_identifier" name="openid_identifier" type="hidden"
+               value="http://steamcommunity.com/openid"/>
+        <input id="openid_submit" src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_01.png"
+               type="image"/>
+      </div>
     </form>
   </div>
-  <div sec:authorize="isAuthenticated()" class="navbar-brand ml-auto" href="#">
+  <div class="navbar-brand ml-auto" href="#" sec:authorize="isAuthenticated()">
     <a class="nav-link" href="/logout">Logout</a>
   </div>
 </nav>
@@ -37,7 +38,7 @@
       Made for "SG Borderlands 3 event" by ozo2003
     </h2>
   </div>
-  <table sec:authorize="isAuthenticated()"  class="table table-hover">
+  <table class="table table-hover" sec:authorize="isAuthenticated()">
     <thead>
     <tr>
       <th scope="col">Game</th>
@@ -47,20 +48,20 @@
       </th>
       <th scope="col">
         <div>Blackgen (Mine)</div>
-        <img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5b/5b40e15bdcf5b787161ec99f5720d99fc2c7cc0c.jpg" />
+        <img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/5b/5b40e15bdcf5b787161ec99f5720d99fc2c7cc0c.jpg"/>
       </th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="book : ${books}">
       <td>
-        <div >[[${book.getName()}]] ([[${book.getTotal()}]] achievements)</div>
+        <div>[[${book.getName()}]] ([[${book.getTotal()}]] achievements)</div>
       </td>
       <td>
         <div>[[${book.getYours()}]] ([[${book.getYoursPercent()}]] %)</div>
       </td>
       <td>
-        <div>[[${book.getMine()}]]  ([[${book.getMinePercent()}]] %)</div>
+        <div>[[${book.getMine()}]] ([[${book.getMinePercent()}]] %)</div>
       </td>
     </tr>
     </tbody>
