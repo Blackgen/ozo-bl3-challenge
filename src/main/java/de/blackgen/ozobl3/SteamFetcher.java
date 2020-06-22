@@ -21,7 +21,7 @@ public class SteamFetcher {
   private final SteamWebApiClient client;
 
   public SteamFetcher() {
-    String steamApiKey = System.getProperty("process.env.STEAM_KEY");
+    String steamApiKey = System.getenv("STEAM_KEY");
     client = new SteamWebApiClient.SteamWebApiClientBuilder(Objects.requireNonNull(steamApiKey))
         .build();
   }
