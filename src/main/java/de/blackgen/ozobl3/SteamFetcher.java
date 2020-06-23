@@ -13,6 +13,7 @@ import com.lukaspradel.steamapi.webapi.request.GetUserStatsForGameRequest;
 import com.lukaspradel.steamapi.webapi.request.builders.SteamWebApiRequestFactory;
 import de.blackgen.ozobl3.data.UserProfile;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -53,6 +54,7 @@ public class SteamFetcher {
       o = client.processRequest(getUserStatsForGameRequest);
     } catch (SteamApiException e) {
       log.error("", e);
+      return 0;
     }
     return o.getPlayerstats().getAchievements().size();
   }
@@ -65,6 +67,7 @@ public class SteamFetcher {
       o = client.processRequest(getUserStatsForGameRequest);
     } catch (SteamApiException e) {
       log.error("", e);
+      return new HashMap<>();
     }
     return o.getResponse().getGames().stream()
         .collect(Collectors.toMap(Game::getAppid, Game::getPlaytimeForever));

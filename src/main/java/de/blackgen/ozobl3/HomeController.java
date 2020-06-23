@@ -37,11 +37,11 @@ public class HomeController {
           .getPlaytimePerGameInMinutes(Arrays.asList(BL1, BL2, BLP), u.getSteamId());
 //      Map<Integer, Integer> myPlaytime = steamFetcher
 //          .getPlaytimePerGameInMinutes(Arrays.asList(BL1, BL2, BLP), u.getSteamId());
-      stats.add(new Stat("Borderlands (GOTY) enhanced", bl1, 39, 80, yourPlaytime.get(BL1),
+      stats.add(new Stat("Borderlands (GOTY) enhanced", bl1, 39, 80, yourPlaytime.getOrDefault(BL1,0),
           1284));
-      stats.add(new Stat("Borderlands 2", bl2, 46, 75, yourPlaytime.get(BL2),
+      stats.add(new Stat("Borderlands 2", bl2, 46, 75, yourPlaytime.getOrDefault(BL2,0),
           6680));
-      stats.add(new Stat("Borderlands Pre-Sequel", blp, 34, 63, yourPlaytime.get(BLP),
+      stats.add(new Stat("Borderlands Pre-Sequel", blp, 34, 63, yourPlaytime.getOrDefault(BLP,0),
           3569));
       session.setAttribute("books", stats);
       model.addAttribute("user", user);

@@ -25,13 +25,13 @@ public class Stat {
 
   public String getYourPlaytimeInHours() {
     float y1 = (float) yourPlaytime / 60.0f;
-    DecimalFormat df = new DecimalFormat("#.00");
+    DecimalFormat df = new DecimalFormat("0.00");
     return df.format(y1);
   }
 
   public String getMyPlaytimeInHours() {
     float y1 = (float) myPlaytime / 60.0f;
-    DecimalFormat df = new DecimalFormat("#.00");
+    DecimalFormat df = new DecimalFormat("0.00");
     return df.format(y1);
   }
 }
