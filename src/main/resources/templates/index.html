@@ -36,7 +36,7 @@
       Made for "SG Borderlands 3 event" by ozo2003
     </h2>
   </div>
-  <table class="table table-hover" sec:authorize="isAuthenticated()">
+  <table class="table table-hover text-center" sec:authorize="isAuthenticated()">
     <thead>
     <tr>
       <th scope="col">Game</th>
@@ -57,9 +57,11 @@
       </td>
       <td>
         <div>[[${book.getYours()}]] ([[${book.getYoursPercent()}]] %)</div>
+        <div>Playtime: [[${book.getYourPlaytimeInHours()}]] h</div>
       </td>
       <td>
         <div>[[${book.getMine()}]] ([[${book.getMinePercent()}]] %)</div>
+        <div>Playtime: [[${book.getMyPlaytimeInHours()}]] h</div>
       </td>
     </tr>
     </tbody>

@@ -2,6 +2,8 @@ package de.blackgen.ozobl3;
 
 import de.blackgen.ozobl3.data.UserProfile;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,9 +33,16 @@ public class HomeController {
       int bl2 = steamFetcher.getArchivementStats(BL2, u.getSteamId());
       int blp = steamFetcher.getArchivementStats(BLP, u.getSteamId());
       // My stats are hardcoded.. But I don't expect them to change during the next days
-      stats.add(new Stat("Borderlands (GOTY) enhanced", bl1, 39, 80));
-      stats.add(new Stat("Borderlands 2", bl2, 46, 75));
-      stats.add(new Stat("Borderlands Pre-Sequel", blp, 34, 63));
+      Map<Integer, Integer> yourPlaytime = steamFetcher
+          .getPlaytimePerGameInMinutes(Arrays.asList(BL1, BL2, BLP), u.getSteamId());
+//      Map<Integer, Integer> myPlaytime = steamFetcher
+//          .getPlaytimePerGameInMinutes(Arrays.asList(BL1, BL2, BLP), u.getSteamId());
+      stats.add(new Stat("Borderlands (GOTY) enhanced", bl1, 39, 80, yourPlaytime.get(BL1),
+          1284));
+      stats.add(new Stat("Borderlands 2", bl2, 46, 75, yourPlaytime.get(BL2),
+          6680));
+      stats.add(new Stat("Borderlands Pre-Sequel", blp, 34, 63, yourPlaytime.get(BLP),
+          3569));
       session.setAttribute("books", stats);
       model.addAttribute("user", user);
       model.addAttribute("books", stats);

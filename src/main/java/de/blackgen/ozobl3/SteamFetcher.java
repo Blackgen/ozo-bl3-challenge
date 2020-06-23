@@ -1,16 +1,22 @@
 package de.blackgen.ozobl3;
 
 import com.lukaspradel.steamapi.core.exception.SteamApiException;
+import com.lukaspradel.steamapi.data.json.ownedgames.Game;
+import com.lukaspradel.steamapi.data.json.ownedgames.GetOwnedGames;
 import com.lukaspradel.steamapi.data.json.playerstats.GetUserStatsForGame;
 import com.lukaspradel.steamapi.data.json.playersummaries.GetPlayerSummaries;
 import com.lukaspradel.steamapi.data.json.playersummaries.Player;
 import com.lukaspradel.steamapi.webapi.client.SteamWebApiClient;
+import com.lukaspradel.steamapi.webapi.request.GetOwnedGamesRequest;
 import com.lukaspradel.steamapi.webapi.request.GetPlayerSummariesRequest;
 import com.lukaspradel.steamapi.webapi.request.GetUserStatsForGameRequest;
 import com.lukaspradel.steamapi.webapi.request.builders.SteamWebApiRequestFactory;
 import de.blackgen.ozobl3.data.UserProfile;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -49,6 +55,19 @@ public class SteamFetcher {
       log.error("", e);
     }
     return o.getPlayerstats().getAchievements().size();
+  }
+
+  public Map<Integer, Integer> getPlaytimePerGameInMinutes(List<Integer> appIDs, String user) {
+    GetOwnedGamesRequest getUserStatsForGameRequest = SteamWebApiRequestFactory
+        .createGetOwnedGamesRequest(user, true, false, appIDs);
+    GetOwnedGames o = null;
+    try {
+      o = client.processRequest(getUserStatsForGameRequest);
+    } catch (SteamApiException e) {
+      log.error("", e);
+    }
+    return o.getResponse().getGames().stream()
+        .collect(Collectors.toMap(Game::getAppid, Game::getPlaytimeForever));
   }
 
 }
