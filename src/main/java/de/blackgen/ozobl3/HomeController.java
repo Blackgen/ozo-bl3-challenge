@@ -33,16 +33,10 @@ public class HomeController {
       int bl2 = steamFetcher.getArchivementStats(BL2, u.getSteamId());
       int blp = steamFetcher.getArchivementStats(BLP, u.getSteamId());
       // My stats are hardcoded.. But I don't expect them to change during the next days
-      Map<Integer, Integer> yourPlaytime = steamFetcher
-          .getPlaytimePerGameInMinutes(Arrays.asList(BL1, BL2, BLP), u.getSteamId());
-//      Map<Integer, Integer> myPlaytime = steamFetcher
-//          .getPlaytimePerGameInMinutes(Arrays.asList(BL1, BL2, BLP), u.getSteamId());
-      stats.add(new Stat("Borderlands (GOTY) enhanced", bl1, 39, 80, yourPlaytime.getOrDefault(BL1,0),
-          1284));
-      stats.add(new Stat("Borderlands 2", bl2, 46, 75, yourPlaytime.getOrDefault(BL2,0),
-          6680));
-      stats.add(new Stat("Borderlands Pre-Sequel", blp, 34, 63, yourPlaytime.getOrDefault(BLP,0),
-          3569));
+      Map<Integer, Integer> yourPlaytime = steamFetcher.getPlaytimePerGameInMinutes(Arrays.asList(BL1, BL2, BLP), u.getSteamId());
+      stats.add(new Stat("Borderlands (GOTY) enhanced", bl1, 39, 80, yourPlaytime.getOrDefault(BL1, 0),1284));
+      stats.add(new Stat("Borderlands 2", bl2, 46, 75, yourPlaytime.getOrDefault(BL2, 0), 6680));
+      stats.add(new Stat("Borderlands Pre-Sequel", blp, 34, 63, yourPlaytime.getOrDefault(BLP, 0), 3569));
       session.setAttribute("books", stats);
       model.addAttribute("user", user);
       model.addAttribute("books", stats);
